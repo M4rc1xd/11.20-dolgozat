@@ -33,7 +33,7 @@ export class AppService {
       return { message: 'A vendégek száma 1 és 10 között kell legyen' };
     }
 
-    if (new Date(foglalas.startDate) < new Date()){
+    if (new Date(foglalas.startDate) < new Date() || !foglalas.startDate){
       return { message: 'A kezdő dátum nem lehet a múltban' };
     }
 

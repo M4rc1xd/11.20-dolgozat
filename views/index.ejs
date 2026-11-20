@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -8,26 +9,28 @@
         Szallasfoglalas
     </title>
 </head>
+
 <body>
     <h1>Jenenleg ennyi foglalas van: <%= foglalasok.length %></h1>
     <form method="POST">
-  <div class="form-group">
-    <label for="inputName">Név</label>
-    <input type="text" class="form-control" id="inputName" placeholder="add meg a neved">
-  </div>
-    <div class="form-group">
-    <label for="inputEmail">Email</label>
-    <input type="email" class="form-control" id="inputEmail" placeholder="add meg az emailed">
-  </div>
-    <div class="form-group">
-    <label for="inputDate">Kezdo datum</label>
-    <input type="date" class="form-control" id="inputDate" placeholder="add meg a datet">
-  </div>
-    <div class="form-group">
-    <label for="inputGuests">hanyan lesztek</label>
-    <input type="text" class="form-control" id="inputGuests" placeholder="1 es 10 kozott">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <div class="form-group">
+            <label for="inputName">Név</label>
+            <input type="text" class="form-control" id="inputName" placeholder="add meg a neved">
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="add meg az emailed">
+        </div>
+        <div class="form-group">
+            <label for="inputDate">Kezdo datum</label>
+            <input type="date" class="form-control" id="inputDate" placeholder="add meg a datet">
+        </div>
+        <div class="form-group">
+            <label for="inputGuests">hanyan lesztek</label>
+            <input type="text" class="form-control" id="inputGuests" placeholder="1 es 10 kozott">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </body>
+
 </html>

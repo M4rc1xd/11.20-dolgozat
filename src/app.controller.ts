@@ -8,16 +8,11 @@ export class AppController {
 
   @Get()
   @Render('index')
-  async getHello() {
+  async getIndexForm() {
     return {
       foglalasok: await this.appService.getCurrentFoglalasok(),
     }
   }
-
-  async getIndexForm(){
-
-  }
-
 
   @Post('index')
   @Render('index')
