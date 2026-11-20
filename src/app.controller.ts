@@ -14,9 +14,12 @@ export class AppController {
     }
   }
 
-  @Post('index')
+  @Post('')
   @Render('index')
-  createFoglalas(@Body() body: ReservationsDTO) {
-    return this.appService.createFoglalas(body);
+  async createFoglalas(@Body() body: ReservationsDTO) {
+    return {
+      felvetel: await this.appService.createFoglalas(body),
+      foglalasok: await this.appService.getCurrentFoglalasok(),
+    }
   }
 }
