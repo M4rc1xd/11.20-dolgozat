@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import mysql, { RowDataPacket } from 'mysql2/promise';
-import { ReservationsDTO } from './reservation.js';
+import { ReservationsDTO } from './reservation.dto.js';
 
 const mysqlConnection = mysql.createPool({
   host: 'localhost',
@@ -29,11 +29,11 @@ export class AppService {
       return { message: 'Az email mező nem megfelelő formátumú' };
     }
 
-    if (foglalas.guests <1 || foglalas.guests > 10){
+    if (Number(foglalas.guests) <1 || Number(foglalas.guests) > 10){
       return { message: 'A vendégek száma 1 és 10 között kell legyen' };
     }
 
-    if (foglalas.startDate < new Date()){
+    if (new Date(foglalas.startDate) < new Date()){
       return { message: 'A kezdő dátum nem lehet a múltban' };
     }
 
@@ -41,6 +41,7 @@ export class AppService {
       INSERT INTO reservations (name, email, startDate, guests)
       VALUES (?, ?, ?, ?)
     `, [foglalas.name, foglalas.email, foglalas.startDate, foglalas.guests]);
-    return { message: 'Foglalás sikeresen létrehozva' };
+    console.log(result);
+
   }
 }

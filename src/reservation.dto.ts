@@ -1,6 +1,6 @@
 export class ReservationsDTO {
     name: string;
     email: string;
-    startDate: Date;
-    guests: number;
+    startDate: string;
+    guests: string;
 }

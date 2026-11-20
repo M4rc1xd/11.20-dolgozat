@@ -1,5 +1,6 @@
 import { Controller, Get, Render, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service.js';
+import { ReservationsDTO } from './reservation.dto.js';
 
 @Controller()
 export class AppController {
@@ -7,14 +8,20 @@ export class AppController {
 
   @Get()
   @Render('index')
-  getHello() {
+  async getHello() {
     return {
-      foglalasok: this.appService.getCurrentFoglalasok(),
+      foglalasok: await this.appService.getCurrentFoglalasok(),
     }
   }
 
-  @Post()
-  createFoglalas(@Body() body: any) {
+  async getIndexForm(){
+
+  }
+
+
+  @Post('index')
+  @Render('index')
+  createFoglalas(@Body() body: ReservationsDTO) {
     return this.appService.createFoglalas(body);
   }
 }
