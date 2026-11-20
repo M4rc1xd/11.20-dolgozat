@@ -20,28 +20,34 @@ export class AppService {
   }
 
   async createFoglalas(foglalas: ReservationsDTO){
+    const output = document.getElementById('output')!
     if (!foglalas.name){
-      return { message: 'A név mező kötelező' };
+      const message = 'A név mező nem lehet üres';
+      output.innerHTML = `<li class="text-danger">${message}</li>`;
     }
 
     const emailRegex = /^.{1,}@.{1,}$/;
     if (!emailRegex.test(foglalas.email)){
-      return { message: 'Az email mező nem megfelelő formátumú' };
+      const message = 'Az email mező nem megfelelő formátumú';
+      output.innerHTML = `<li class="text-danger">${message}</li>`;
     }
 
     if (Number(foglalas.guests) <1 || Number(foglalas.guests) > 10){
-      return { message: 'A vendégek száma 1 és 10 között kell legyen' };
+            const message = 'A vendégek száma 1 és 10 között kell legyen';
+      output.innerHTML = `<li class="text-danger">${message}</li>`;
     }
 
     if (new Date(foglalas.startDate) < new Date() || !foglalas.startDate){
-      return { message: 'A kezdő dátum nem lehet a múltban' };
+      const message = 'A kezdő dátum nem lehet a múltban';
+      output.innerHTML = `<li class="text-danger">${message}</li>`;
     }
 
     const [result] = await mysqlConnection.execute(`
       INSERT INTO reservations (name, email, startDate, guests)
       VALUES (?, ?, ?, ?)
     `, [foglalas.name, foglalas.email, foglalas.startDate, foglalas.guests]);
-    console.log(result);
+    const message = "sikeres felvetel"
+    output.innerHTML = `<li class="text-success">${message}</li>`;
 
   }
 }
