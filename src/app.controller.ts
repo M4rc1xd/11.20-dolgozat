@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service.js';
 
 @Controller()
@@ -9,7 +9,12 @@ export class AppController {
   @Render('index')
   getHello() {
     return {
-      title: 'My First NestJS App'
+      foglalasok: this.appService.getCurrentFoglalasok(),
     }
+  }
+
+  @Post()
+  createFoglalas(@Body() body: any) {
+    return this.appService.createFoglalas(body);
   }
 }
