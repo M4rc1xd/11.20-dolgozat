@@ -20,28 +20,37 @@ export class AppService {
   }
 
   async createFoglalas(foglalas: ReservationsDTO){
-    if (!foglalas.name){
-      const message = 'A név mező nem lehet üres';
+    if (!foglalas.name?.trim()){
+      return { success: false, message: 'A név mező nem lehet üres' };
     }
 
     const emailRegex = /^.{1,}@.{1,}$/;
-    if (!emailRegex.test(foglalas.email)){
-      const message = 'Az email mező nem megfelelő formátumú';
+    if (!foglalas.email || !emailRegex.test(foglalas.email)){
+      return { success: false, message: 'Az email mező nem megfelelő formátumú' };
     }
 
-    if (Number(foglalas.guests) <1 || Number(foglalas.guests) > 10){
-      const message = 'A vendégek száma 1 és 10 között kell legyen';
+    const guests = Number(foglalas.guests);
+    if (!Number.isInteger(guests) || guests < 1 || guests > 10){
+      return { success: false, message: 'A vendégek száma 1 és 10 között kell legyen' };
     }
 
-    if (new Date(foglalas.startDate) < new Date() || !foglalas.startDate){
-      const message = 'A kezdő dátum nem lehet a múltban';
+    if (!foglalas.startDate){
+      return { success: false, message: 'A kezdő dátum nem lehet a múltban' };
     }
 
-    const [result] = await mysqlConnection.execute(`
-      INSERT INTO reservations (name, email, startDate, guests)
-      VALUES (?, ?, ?, ?)
-    `, [foglalas.name, foglalas.email, new Date(foglalas.startDate), Number(foglalas.guests)]);
-    const message = "sikeres felvetel"
+    const startDate = new Date(foglalas.startDate);
+    if (Number.isNaN(startDate.getTime()) || startDate < new Date()){
+      return { success: false, message: 'A kezdő dátum nem lehet a múltban' };
+    }
 
+    try {
+      await mysqlConnection.execute(`
+        INSERT INTO reservations (name, email, startDate, guests)
+        VALUES (?, ?, ?, ?)
+      `, [foglalas.name.trim(), foglalas.email, startDate, guests]);
+      return { success: true, message: 'sikeres felvetel' };
+    } catch {
+      return { success: false, message: 'A foglalás mentése sikertelen' };
+    }
   }
 }

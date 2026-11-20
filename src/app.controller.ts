@@ -11,6 +11,8 @@ export class AppController {
   async getIndexForm() {
     return {
       foglalasok: await this.appService.getCurrentFoglalasok(),
+      bevittAdatok: {},
+      felvetel: null,
     }
   }
 
@@ -20,6 +22,7 @@ export class AppController {
     return {
       felvetel: await this.appService.createFoglalas(body),
       foglalasok: await this.appService.getCurrentFoglalasok(),
+      bevittAdatok: body,
     }
   }
 }
